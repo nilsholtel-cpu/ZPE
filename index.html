@@ -22,31 +22,53 @@
     --shadow:0 12px 40px rgba(2,6,23,.06);
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  body{
+    margin:0;background:var(--bg);color:var(--fg);
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  }
   .wrap{min-height:100vh;display:grid;place-items:center;padding:28px}
-  .card{width:min(980px,100%);background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;position:relative;box-shadow:var(--shadow)}
+  .card{
+    width:min(980px,100%);background:var(--card);border:1px solid var(--border);
+    border-radius:16px;padding:28px;position:relative;box-shadow:var(--shadow)
+  }
   .header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
   .header-left{display:flex;align-items:center;gap:12px}
   .logo-dot{width:10px;height:10px;border-radius:50%;background:var(--primary);display:inline-block}
   .header h1{font-size:18px;margin:0;font-weight:600;letter-spacing:.2px;color:var(--fg)}
   .badge{font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:999px;color:var(--muted);background:#fff}
+
   .type-area .line,.line{line-height:1.7}
-  .type-area{font-family:'Roboto Mono',ui-monospace,Menlo,Consolas,monospace;font-size:14px;color:#0b1a37}
-  .type-area .cursor{display:inline-block;width:8px;height:1.2em;background:var(--primary);opacity:.6;vertical-align:-0.2em;animation:blink 1s steps(1,end) infinite;margin-left:6px;border-radius:1px}
+  .type-area{
+    font-family:'Roboto Mono',ui-monospace,Menlo,Consolas,monospace;font-size:14px;color:#0b1a37
+  }
+  .type-area .cursor{
+    display:inline-block;width:8px;height:1.2em;background:var(--primary);opacity:.6;
+    vertical-align:-0.2em;animation:blink 1s steps(1,end) infinite;margin-left:6px;border-radius:1px
+  }
   @keyframes blink{50%{opacity:0}}
+
   .hidden{display:none}
+
   .block{border:1px solid var(--border);border-radius:12px;padding:16px;margin:18px 0;background:#fff;transition:opacity .6s ease}
   .block-title{opacity:.9;margin-bottom:10px;color:#0b1a37;font-weight:600}
   .text{opacity:.95;line-height:1.75}
+
   .btn-row{display:flex;gap:10px;flex-wrap:wrap}
-  .btn{appearance:none;background:#fff;color:#0b1a37;border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-family:inherit;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;transition:transform .06s ease,box-shadow .2s ease,border-color .2s ease}
+  .btn{
+    appearance:none;background:#fff;color:#0b1a37;border:1px solid var(--border);
+    border-radius:10px;padding:10px 14px;font-family:inherit;font-size:14px;cursor:pointer;
+    text-decoration:none;display:inline-block;transition:transform .06s ease,box-shadow .2s ease,border-color .2s ease;
+  }
   .btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(2,6,23,.06);border-color:#cbd5e1}
   .btn:active{transform:translateY(0)}
   .btn[disabled]{opacity:.55;cursor:not-allowed}
   .btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
   .btn.primary:hover{box-shadow:0 8px 24px rgba(37,99,235,.25)}
+
   .muted{margin-top:8px;color:var(--muted);font-size:13px}
   .footer{margin-top:24px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+
   .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
   .form-grid .full{grid-column:1 / -1}
   label{font-size:12px;color:#334155;margin-bottom:6px;display:block}
@@ -55,9 +77,12 @@
   .hint{font-size:12px;color:var(--muted);margin-top:6px}
   .ok{color:#16a34a}.err{color:#dc2626}
   .dim{opacity:.35}
+
   .intro{margin-top:32px}
   .intro h2{margin:0 0 10px 0;font-size:16px;font-weight:600;color:#0b1a37}
   .intro .line{color:#0b1a37}
+
+  /* Nur die Frage-Blöcke mit sanftem Pastell-Verlauf */
   .block.question{background:linear-gradient(135deg,#f5f9ff 0%,#fff6f9 60%,#ffffff 100%);border-color:#e6eefc}
   .block.question .block-title{color:#0b1a37}
   </style>
@@ -71,6 +96,8 @@
       </header>
 
       <section id="typeArea" class="type-area"></section>
+
+      <!-- Intro mit zusätzlichem Abstand + Überschrift -->
       <section id="introArea" class="intro hidden">
         <h2>Worum geht’s in Ihrer Kurz-Analyse?</h2>
         <div class="line">• Wo steht Ihr Unternehmen im Vergleich (HR) zu Ihrer Branche?</div>
@@ -97,10 +124,65 @@
     calendarUrl: 'https://outlook.office.com/book/techconsultGmbHNilsHoltel@techconsult.de/',
     reportEmail: 'nils.holtel@techconsult.de',
     apiUrl: '/api/lead',
-    quiz: [/* ... Fragenstrecke unverändert (wie schon eingebaut) ... */]
+
+    // Fragenstrecke mit Benchmark-Texten
+    quiz: [
+      {
+        id: 'q1_invest',
+        text: 'Frage 1 – Wie wichtig werden Investitionen in Marktforschung & Wettbewerbsanalysen bis 2026?',
+        options: [
+          { label: 'Sehr wichtig – wir bauen das aus', key: 'invest_high', benchmark: '„Über die Hälfte der Unternehmen plant höhere Investitionen in Markt- und Wettbewerbsanalysen bis 2026 – gerade um strategische Weichen früh abzusichern.“' },
+          { label: 'Mittel – punktuell geplant', key: 'invest_mid', benchmark: '„Rund ein Drittel setzt Marktforschung selektiv bei großen HR-/IT-Projekten ein – als Entscheidungshilfe für kritische Investitionen.“' },
+          { label: 'Gering – bisher kein Fokus', key: 'invest_low', benchmark: '„Nur ca. 15 % der Firmen verzichten ganz auf eigene Analysen – riskieren dadurch aber längere Auswahlzyklen und weniger Markttransparenz.“' }
+        ]
+      },
+      {
+        id: 'q2_gtm',
+        text: 'Frage 2 – Wo erwarten Sie die größten Veränderungen in Ihrer HR-Strategie bis 2026?',
+        options: [
+          { label: 'Neue Zielmärkte / Branchen', key: 'gtm_newmarkets', benchmark: '„Ca. 40 % der Unternehmen planen den Schritt in neue Branchen oder Märkte – entscheidend sind dabei differenzierte HR-Angebote und klares Talent-Messaging.“' },
+          { label: 'Vertriebs-/Recruitingmodell neu ausrichten', key: 'gtm_salesmodel', benchmark: '„Ein Drittel richtet Strukturen in Recruiting und HR neu aus – Digitalisierung & direkte Candidate Journeys sind Haupttreiber.“' },
+          { label: 'Marketing & Kommunikation verstärken', key: 'gtm_marketing', benchmark: '„Über 30 % der Firmen investieren stärker in HR-Marketing, da Sichtbarkeit die Top-Priorität im War for Talent ist.“' },
+          { label: 'Employee / Candidate Experience ausbauen', key: 'gtm_cx', benchmark: '„Knapp die Hälfte der Unternehmen fokussieren sich auf Experience-Programme – Feedback & Benchmark-Vergleiche beschleunigen hier spürbar die Wirkung.“' }
+        ]
+      },
+      {
+        id: 'q3_ratings',
+        text: 'Frage 3 – Welche Rolle spielen unabhängige User Ratings & Analysten-Benchmarks (PUR) bis 2026?',
+        options: [
+          { label: 'Sehr relevant – beeinflusst Marktauftritt', key: 'ratings_high', benchmark: '„Rund zwei Drittel setzen bis 2026 aktiv auf Ratings – weil Vergleichbarkeit Vertrauen schafft und Marktposition sichtbar macht.“' },
+          { label: 'Mittel – nice to have, ergänzend', key: 'ratings_mid', benchmark: '„Etwa 30 % nutzen Ratings punktuell – häufig zur Absicherung bei HR-Software-Investitionen oder Employer-Branding-Maßnahmen.“' },
+          { label: 'Niedrig – wir setzen auf andere Differenzierung', key: 'ratings_low', benchmark: '„Nur eine Minderheit (unter 15 %) verlässt sich allein auf interne Stärken – läuft damit Gefahr, in Entscheidungsprozessen an Sichtbarkeit zu verlieren.“' }
+        ]
+      },
+      {
+        id: 'q4_growth',
+        text: 'Frage 4 – Welcher Hebel stärkt Ihre Marktposition bis 2026 am meisten?',
+        options: [
+          { label: 'Markenbekanntheit steigern', key: 'growth_brand', benchmark: '„Über 40 % sehen Sichtbarkeit & Brand als Hauptfaktor für HR-Erfolg – Benchmark-Daten dienen hier zunehmend als Türöffner.“' },
+          { label: 'Wettbewerbsposition schärfen', key: 'growth_competition', benchmark: '„Ein Drittel fokussiert sich klar auf Differenzierung – Transparenz durch Vergleichsdaten gilt als entscheidender Treiber.“' },
+          { label: 'Differenzierung über Innovation', key: 'growth_innovation', benchmark: '„Ca. 25 % der Unternehmen positionieren sich über Innovation – Benchmark-Trends zeigen, welche Ansätze wirklich Resonanz erzeugen.“' },
+          { label: 'Sichtbarkeit durch Referenzen & Ratings', key: 'growth_ratings', benchmark: '„Zwei von drei Firmen setzen gezielt auf externe Belege (Referenzen, PUR-Auszeichnungen), um Neukunden & Talente schneller von sich zu überzeugen.“' }
+        ]
+      },
+      {
+        id: 'q5_trends',
+        text: 'Frage 5 – Welche HR-Themen sehen Sie als wichtigste Zukunftstrends bis 2026?',
+        options: [
+          { label: 'HR-Digitalisierung & Automatisierung (z. B. KI-gestützte Prozesse)', key: 'trend_digital' , benchmark: '„Digitale HR-Prozesse sind die klare Nr. 1 – über 60 % der Unternehmen priorisieren Automatisierung, um Effizienz & Datenqualität zu sichern.“' },
+          { label: 'Employee Experience & Wellbeing', key: 'trend_ex', benchmark: '„Knapp die Hälfte der HR-Teams setzt auf verbesserte Mitarbeitererlebnisse – Top-Faktor für Bindung & Arbeitgeberattraktivität.“' },
+          { label: 'Fachkräftesicherung & Talent-Pipeline', key: 'trend_talent', benchmark: '„70 % nennen Talentmangel als größte Herausforderung – Benchmarks helfen, realistische Erfolgsstrategien im Recruiting abzuleiten.“' },
+          { label: 'New Work & hybride Arbeitsmodelle', key: 'trend_newwork', benchmark: '„40 % nutzen hybride Modelle als festes Element – Flexibilität wird damit vom Zusatz zum Wettbewerbsfaktor.“' },
+          { label: 'Nachhaltigkeit & Diversity im HR', key: 'trend_sustain', benchmark: '„Ein wachsender Anteil (jedes dritte Unternehmen) koppelt HR-Strategien an ESG & Vielfalt – für viele bereits ein klares Differenzierungskriterium im Employer Branding.“' }
+        ]
+      }
+    ]
   };
+
+  // Theme
   document.documentElement.setAttribute('data-theme','hr');
 
+  // Neue Boot-Sequenz
   const bootLines = [
     'Willkommen bei den HR-Insights 2026. Welche Trends zählen wirklich – Recruiting? Employee Experience? Digitalisierung?',
     'In unserer Kurz-Analyse vergleichen wir Ihre Einschätzung mit den Trends aus der HR-Community – faktenbasiert und kompakt.',
@@ -108,115 +190,207 @@
     'Willkommen bei techconsult – HR Insights für Entscheider:innen.'
   ];
 
-  const typeArea=document.getElementById('typeArea');
-  const introArea=document.getElementById('introArea');
-  const resultArea=document.getElementById('resultArea');
-  let runId=0; const answers={};
+  const typeArea   = document.getElementById('typeArea');
+  const introArea  = document.getElementById('introArea');
+  const resultArea = document.getElementById('resultArea');
 
-  function scrollToBottom(){window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})}
-  function typeLineInto(container,text,speed=16,myRun=runId){
+  let runId = 0;
+  const answers = {};
+
+  function scrollToBottom(){ window.scrollTo({ top: document.body.scrollHeight, behavior:'smooth' }); }
+
+  function typeLineInto(container, text, speed=16, myRun=runId){
     return new Promise(resolve=>{
-      const lineEl=document.createElement('div');lineEl.className='line';
-      const cursor=document.createElement('span');cursor.className='cursor';
-      const textNode=document.createTextNode('');lineEl.appendChild(textNode);lineEl.appendChild(cursor);
+      const lineEl=document.createElement('div'); lineEl.className='line';
+      const cursor=document.createElement('span'); cursor.className='cursor';
+      const textNode=document.createTextNode('');
+      lineEl.appendChild(textNode); lineEl.appendChild(cursor);
       container.appendChild(lineEl);
-      let i=0;const tick=()=>{if(myRun!==runId){cursor.remove();resolve('aborted');return;}
-        if(i<=text.length){textNode.textContent=text.slice(0,i);i++;setTimeout(tick,speed);}
-        else{cursor.remove();resolve('done');}scrollToBottom();};setTimeout(tick,120);
+      let i=0;
+      const tick=()=>{ if(myRun!==runId){cursor.remove();resolve('aborted');return;}
+        if(i<=text.length){ textNode.textContent=text.slice(0,i); i++; setTimeout(tick,speed); }
+        else { cursor.remove(); resolve('done'); }
+        scrollToBottom();
+      };
+      setTimeout(tick,120);
     });
   }
-  async function typeSequence(container,lines,speed=16,gap=180,myRun=runId){
-    for(const l of lines){const r=await typeLineInto(container,l,speed,myRun);if(r==='aborted'||myRun!==runId)return 'aborted';await new Promise(res=>setTimeout(res,gap));if(myRun!==runId)return 'aborted';}
+
+  async function typeSequence(container, lines, speed=16, gap=180, myRun=runId){
+    for(const l of lines){
+      const r=await typeLineInto(container,l,speed,myRun);
+      if(r==='aborted'||myRun!==runId) return 'aborted';
+      await new Promise(res=>setTimeout(res,gap));
+      if(myRun!==runId) return 'aborted';
+    }
     return 'done';
   }
-  function insertAfter(parent,newNode,refNode){parent.insertBefore(newNode,refNode?refNode.nextSibling:null)}
 
-  async function showQuestion(idx,container,afterEl=null){
+  function insertAfter(parent,newNode,refNode){ parent.insertBefore(newNode, refNode? refNode.nextSibling : null); }
+
+  async function showQuestion(idx, container, afterEl=null){
     const qWrap=document.createElement('div');
-    const block=document.createElement('div');block.className='block question';
-    const title=document.createElement('div');title.className='block-title';block.appendChild(title);
-    const btnRow=document.createElement('div');btnRow.className='btn-row';
-    qWrap.appendChild(block);qWrap.appendChild(btnRow);
-    if(afterEl&&afterEl.parentNode===container)insertAfter(container,qWrap,afterEl);else container.appendChild(qWrap);
+    const block=document.createElement('div'); block.className='block question';
+    const title=document.createElement('div'); title.className='block-title'; block.appendChild(title);
+    const btnRow=document.createElement('div'); btnRow.className='btn-row';
+    qWrap.appendChild(block); qWrap.appendChild(btnRow);
+
+    if(afterEl && afterEl.parentNode===container) insertAfter(container,qWrap,afterEl); else container.appendChild(qWrap);
     container.classList.remove('hidden');
-    const myRun=++runId;await typeLineInto(title,CONFIG.quiz[idx].text,14,myRun);if(myRun!==runId)return;
+
+    const myRun=++runId;
+    await typeLineInto(title, CONFIG.quiz[idx].text, 14, myRun); if(myRun!==runId) return;
+
     CONFIG.quiz[idx].options.forEach(opt=>{
-      const b=document.createElement('button');b.className='btn';b.textContent=opt.label;
-      b.addEventListener('click',()=>handleAnswer(idx,opt,qWrap));btnRow.appendChild(b);
+      const b=document.createElement('button'); b.className='btn'; b.textContent=opt.label;
+      b.addEventListener('click', ()=>handleAnswer(idx,opt,qWrap));
+      btnRow.appendChild(b);
     });
     scrollToBottom();
   }
 
   async function handleAnswer(idx,opt,qWrap){
-    const myRun=++runId;answers[CONFIG.quiz[idx].id]=opt.label;
-    const sysBlock=document.createElement('div');sysBlock.className='block';insertAfter(resultArea,sysBlock,qWrap);
-    await typeLineInto(sysBlock,`Auswahl bestätigt: ${opt.label}`,14,myRun);if(myRun!==runId)return;
-    const benchBlock=document.createElement('div');benchBlock.className='block';
-    const benchTitle=document.createElement('div');benchTitle.className='block-title';benchTitle.textContent='Benchmark-Einordnung:';
-    const benchText=document.createElement('div');benchText.className='text';benchText.textContent=opt.benchmark;
-    benchBlock.appendChild(benchTitle);benchBlock.appendChild(benchText);
+    const myRun=++runId; const q=CONFIG.quiz[idx]; answers[q.id]=opt.label;
+
+    const sysBlock=document.createElement('div'); sysBlock.className='block';
+    insertAfter(resultArea,sysBlock,qWrap);
+    await typeLineInto(sysBlock, `Auswahl bestätigt: ${opt.label}`, 14, myRun); if(myRun!==runId) return;
+
+    // Benchmark sofort anzeigen (kein Tippen)
+    const benchBlock=document.createElement('div'); benchBlock.className='block';
+    const benchTitle=document.createElement('div'); benchTitle.className='block-title'; benchTitle.textContent='Benchmark-Einordnung:';
+    const benchText=document.createElement('div'); benchText.className='text'; benchText.textContent = opt.benchmark;
+    benchBlock.appendChild(benchTitle); benchBlock.appendChild(benchText);
     insertAfter(resultArea,benchBlock,sysBlock);
-    setTimeout(()=>{sysBlock.classList.add('dim')},200);await new Promise(r=>setTimeout(r,500));if(myRun!==runId)return;
-    const nextIndex=idx+1;const isLast=nextIndex>=CONFIG.quiz.length;if(isLast){await analyseAndMission(myRun);}else{showQuestion(nextIndex,resultArea,benchBlock);}
+
+    setTimeout(()=>{ sysBlock.classList.add('dim'); }, 200);
+    await new Promise(r=>setTimeout(r,500)); if(myRun!==runId) return;
+
+    const nextIndex=idx+1; const isLast=nextIndex>=CONFIG.quiz.length;
+    if(isLast){ await analyseAndMission(myRun); }
+    else { showQuestion(nextIndex, resultArea, benchBlock); }
   }
 
   async function analyseAndMission(myRun){
-    const endBlock=document.createElement('div');endBlock.className='block';resultArea.appendChild(endBlock);
-    await typeLineInto(endBlock,'Analyse abgeschlossen.',14,myRun);if(myRun!==runId)return;
-    const cheers=document.createElement('div');cheers.className='line';cheers.textContent='Ihre Antworten sind eingegangen – jetzt beginnt Ihr Wissensvorsprung 🎉';endBlock.appendChild(cheers);
-    await new Promise(r=>setTimeout(r,260));await missionSequence(myRun,true);
+    const endBlock=document.createElement('div'); endBlock.className='block';
+    resultArea.appendChild(endBlock);
+    await typeLineInto(endBlock, 'Analyse abgeschlossen.', 14, myRun); if(myRun!==runId) return;
+
+    const cheers=document.createElement('div'); cheers.className='line';
+    cheers.textContent='Ihre Antworten sind eingegangen – jetzt beginnt Ihr Wissensvorsprung 🎉';
+    endBlock.appendChild(cheers);
+
+    await new Promise(r=>setTimeout(r,260));
+    await missionSequence(myRun, true);
   }
 
-  async function missionSequence(myRun,focusCalendar=true){
-    const block2=document.createElement('div');block2.className='block';
-    const title2=document.createElement('div');title2.className='block-title';title2.textContent='Nächster Schritt';
-    const missionP=document.createElement('div');missionP.className='text';block2.appendChild(title2);block2.appendChild(missionP);resultArea.appendChild(block2);scrollToBottom();
-    await typeLineInto(missionP,'Sie erhalten in Kürze exklusiven Zugang zu unseren Vorab-Insights und Benchmarks für 2026.\nWenn Sie möchten, können wir Ihre Antworten direkt mit relevanten Markttrends abgleichen und daraus ein individuelles Zukunftsprofil erstellen – selbstverständlich kostenfrei und unverbindlich.',14,myRun);
-    const btnRow=document.createElement('div');btnRow.className='btn-row';btnRow.style.marginTop='10px';
-    const a1=document.createElement('a');a1.className='btn primary';a1.id='ctaCalendar';a1.href=CONFIG.calendarUrl;a1.target='_blank';a1.rel='noopener noreferrer';a1.textContent='✅ Termin vereinbaren: PUR-Benchmarks im Gespräch';
-    const b2=document.createElement('button');b2.className='btn';b2.type='button';b2.textContent='📄 Exklusive PUR-Insights per Mail';b2.addEventListener('click',()=>openMailForm());
-    btnRow.appendChild(a1);btnRow.appendChild(b2);block2.appendChild(btnRow);scrollToBottom();
-    if(focusCalendar){const el=document.getElementById('ctaCalendar');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});}}
+  async function missionSequence(myRun, focusCalendar=true){
+    const block2=document.createElement('div'); block2.className='block';
+    const title2=document.createElement('div'); title2.className='block-title'; title2.textContent='Nächster Schritt';
+    const missionP=document.createElement('div'); missionP.className='text';
+    block2.appendChild(title2); block2.appendChild(missionP);
+    resultArea.appendChild(block2); scrollToBottom();
+
+    const r2=await typeLineInto(
+      missionP,
+      'Sie erhalten in Kürze exklusiven Zugang zu unseren Vorab-Insights und Benchmarks für 2026.\nWenn Sie möchten, können wir Ihre Antworten direkt mit relevanten Markttrends abgleichen und daraus ein individuelles Zukunftsprofil erstellen – selbstverständlich kostenfrei und unverbindlich.',
+      14,myRun
+    );
+    if(r2==='aborted'||myRun!==runId) return;
+
+    const btnRow=document.createElement('div'); btnRow.className='btn-row'; btnRow.style.marginTop='10px';
+
+    const a1=document.createElement('a');
+    a1.className='btn primary';
+    a1.id='ctaCalendar';
+    a1.href=CONFIG.calendarUrl;
+    a1.target='_blank';
+    a1.rel='noopener noreferrer';
+    a1.textContent='✅ Termin vereinbaren: PUR-Benchmarks im Gespräch';
+
+    const b2=document.createElement('button');
+    b2.className='btn';
+    b2.type='button';
+    b2.textContent='📄 Exklusive PUR-Insights per Mail';
+    b2.addEventListener('click', ()=>openMailForm());
+
+    btnRow.appendChild(a1); btnRow.appendChild(b2);
+    block2.appendChild(btnRow); scrollToBottom();
+
+    if(focusCalendar){
+      const el=document.getElementById('ctaCalendar');
+      if(el){ el.scrollIntoView({behavior:'smooth',block:'center'}); }
+    }
   }
 
   function openMailForm(){
-    const formBlock=document.createElement('div');formBlock.className='block';
-    const title=document.createElement('div');title.className='block-title';title.textContent='Exklusive PUR-Insights per Mail';formBlock.appendChild(title);
-    const form=document.createElement('form');form.setAttribute('novalidate','novalidate');
-    form.innerHTML=`
+    const formBlock=document.createElement('div'); formBlock.className='block';
+    const title=document.createElement('div'); title.className='block-title'; title.textContent='Exklusive PUR-Insights per Mail';
+    formBlock.appendChild(title);
+
+    const form=document.createElement('form'); form.setAttribute('novalidate','novalidate');
+    form.innerHTML = `
       <div class="form-grid">
         <div class="full"><label for="name">Name</label><input id="name" name="name" placeholder="Vor- und Nachname" required /></div>
         <div><label for="company">Unternehmen</label><input id="company" name="company" placeholder="Firmenname" required /></div>
         <div><label for="email">Geschäftliche E-Mail</label><input id="email" name="email" placeholder="name@unternehmen.de" required /></div>
       </div>
-      <div class="hint">Sie erhalten umgehend eine Bestätigung per E-Mail („<em>Willkommen zum Early Access: Ihre Insights folgen in Kürze</em>“).</div>
+      <div class="hint">
+        Sie erhalten umgehend eine Bestätigung per E-Mail
+        („<em>Willkommen zum Early Access: Ihre Insights folgen in Kürze</em>“).
+        Darin: erste Benchmarks, Ihr persönliches Zukunftsprofil 2026 sowie der Link zum 30-Minuten-Benchmark-Gespräch.
+      </div>
       <div class="btn-row" style="margin-top:12px;">
         <button type="submit" class="btn primary">Zusenden</button>
         <button type="button" class="btn" id="closeForm">Abbrechen</button>
       </div>
-      <div id="formMsg" class="hint"></div>`;
-    form.addEventListener('submit',async(e)=>{
+      <div id="formMsg" class="hint"></div>
+    `;
+
+    form.addEventListener('submit', async (e)=>{
       e.preventDefault();
       const name=form.querySelector('#name').value.trim();
       const company=form.querySelector('#company').value.trim();
       const email=form.querySelector('#email').value.trim();
       const msg=form.querySelector('#formMsg');
       if(!name||!company||!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-        msg.textContent='Bitte alle Felder korrekt ausfüllen (gültige E-Mail).';msg.className='hint err';return;}
-      msg.textContent='Wird gesendet…';msg.className='hint';
+        msg.textContent='Bitte alle Felder korrekt ausfüllen (gültige E-Mail).'; msg.className='hint err'; return;
+      }
+      msg.textContent='Wird gesendet…'; msg.className='hint';
+
       try{
-        const payload={name,company,email,answers:(typeof answers==='object'?answers:{})};
-        const res=await fetch(CONFIG.apiUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-        if(!res.ok)throw new Error(await res.text());
-        msg.innerHTML='Bestätigung versendet. Bitte prüfen Sie Ihr Postfach auf „<em>Willkommen zum Early Access: Ihre Insights folgen in Kürze</em>“.';msg.className='hint ok';
+        const payload={ name, company, email, answers: (typeof answers==='object'? answers : {}) };
+        const res=await fetch(CONFIG.apiUrl,{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+        if(!res.ok) throw new Error(await res.text());
+
+        msg.innerHTML='Bestätigung versendet. Bitte prüfen Sie Ihr Postfach auf '
+          + '„<em>Willkommen zum Early Access: Ihre Insights folgen in Kürze</em>“.';
+        msg.className='hint ok';
         form.querySelectorAll('input,button[type="submit"]').forEach(i=>i.disabled=true);
-      }catch(err){console.error(err);msg.textContent='Senden fehlgeschlagen. Bitte später erneut versuchen oder am Stand ansprechen.';msg.className='hint err';}
+      }catch(err){
+        console.error(err);
+        msg.textContent='Senden fehlgeschlagen. Bitte später erneut versuchen oder am Stand ansprechen.';
+        msg.className='hint err';
+      }
     });
-    const closeBtn=document.createElement('button');closeBtn.type='button';closeBtn.textContent='Formular schließen';closeBtn.className='btn';closeBtn.addEventListener('click',()=>{formBlock.remove()});
-    formBlock.appendChild(form);formBlock.appendChild(closeBtn);resultArea.appendChild(formBlock);formBlock.scrollIntoView({behavior:'smooth',block:'start'});
+
+    const closeBtn=document.createElement('button');
+    closeBtn.type='button'; closeBtn.textContent='Formular schließen'; closeBtn.className='btn';
+    closeBtn.addEventListener('click',()=>{ formBlock.remove(); });
+
+    formBlock.appendChild(form); formBlock.appendChild(closeBtn);
+    resultArea.appendChild(formBlock);
+    formBlock.scrollIntoView({behavior:'smooth',block:'start'});
   }
 
-  (function boot(){const myRun=++runId;typeSequence(typeArea,bootLines,14,180,myRun).then(()=>{if(myRun!==runId)return;introArea.classList.remove('hidden');setTimeout(()=>{if(myRun!==runId)return;showQuestion(0,resultArea)},500)})})();
+  (function boot(){
+    const myRun=++runId;
+    typeSequence(typeArea, bootLines, 14, 180, myRun).then(()=>{
+      if(myRun!==runId) return;
+      introArea.classList.remove('hidden');
+      setTimeout(()=>{ if(myRun!==runId) return; showQuestion(0, resultArea); }, 500);
+    });
+  })();
   </script>
 </body>
 </html>
