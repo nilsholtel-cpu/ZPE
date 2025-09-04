@@ -23,8 +23,6 @@
     --shadow:0 12px 40px rgba(2,6,23,.06);
   }
 
-  html[data-theme="hr"] { /* alias */ }
-
   *{box-sizing:border-box}
   body{
     margin:0;
@@ -55,15 +53,16 @@
     color:var(--muted); background:#fff;
   }
 
-  /* Typing/Content */
+  /* Content / Typing */
   .type-area .line,.line{line-height:1.7}
   .type-area{font-family:'Roboto Mono',ui-monospace,Menlo,Consolas,monospace;font-size:14px;color:#0b1a37}
-  /* dezentere Cursor-Variante */
   .type-area .cursor{
     display:inline-block;width:8px;height:1.2em;background:var(--primary);
     opacity:.6; vertical-align:-0.2em; animation:blink 1s steps(1,end) infinite;margin-left:6px;border-radius:1px;
   }
   @keyframes blink{50%{opacity:0}}
+
+  .hidden{display:none}
 
   /* Blöcke / Buttons */
   .block{
@@ -107,6 +106,27 @@
   .ok{color:#16a34a}.err{color:#dc2626}
 
   .dim{opacity:.35}
+
+  /* Intro-Bereich nach Typing – extra Luft */
+  .intro{
+    margin-top:32px; /* zusätzlicher Abstand zwischen Boot-Lines und den drei Fragen */
+  }
+  .intro h2{
+    margin:0 0 10px 0;
+    font-size:16px;
+    font-weight:600;
+    color:#0b1a37;
+  }
+  .intro .line{color:#0b1a37}
+
+  /* Nur die Frage-Blöcke mit sanftem Pastell-Verlauf */
+  .block.question{
+    background: linear-gradient(135deg, #f5f9ff 0%, #fff6f9 60%, #ffffff 100%);
+    border-color:#e6eefc;
+  }
+  .block.question .block-title{
+    color:#0b1a37;
+  }
   </style>
 </head>
 <body>
@@ -122,7 +142,9 @@
 
       <section id="typeArea" class="type-area"></section>
 
-      <section id="introArea" class="hidden">
+      <!-- Intro mit zusätzlichem Abstand + Überschrift -->
+      <section id="introArea" class="intro hidden">
+        <h2>Worum geht’s in Ihrer Kurz-Analyse?</h2>
         <div class="line">• Wo steht Ihr Unternehmen im Vergleich (HR) zu Ihrer Branche?</div>
         <div class="line">• Welche HR-Prioritäten setzen andere 2025–2026?</div>
         <div class="line">• Welche Rolle spielen unabhängige Ratings (PUR) für Wachstum & Recruiting?</div>
@@ -133,7 +155,7 @@
       <section id="resultArea" class="hidden"></section>
 
       <footer class="footer">
-        <span>techconsult – Research. Insights. HR Excellence.</span>
+        <span>techconsult – Research & Insights. Analystenhaus der Heise Group.</span>
         <span>[trusted since 1992]</span>
       </footer>
     </div>
@@ -149,7 +171,6 @@
     apiUrl: '/api/lead', // Vercel Serverless Endpoint (unverändert)
 
     quiz: [
-      /* — unverändert, deine Fragen bleiben gleich — */
       {
         id: 'q1_invest',
         text: 'Wie wichtig werden Investitionen in Marktforschung & Wettbewerbsanalysen für Ihr Unternehmen bis 2026?',
@@ -191,10 +212,10 @@
     ]
   };
 
-  // HR-Theme setzen (nur noch ein Theme)
+  // HR-Theme setzen
   document.documentElement.setAttribute('data-theme', 'hr');
 
-  // === HR-Intro/Boot-Sequenz (freundlich statt "secure system") ===
+  // HR-Intro/Boot-Sequenz
   const bootLines = [
     'Willkommen zur HR-Zukunftsanalyse.',
     'Messe-Badge erkannt – lassen Sie uns starten.',
@@ -233,7 +254,8 @@
 
   async function showQuestion(idx, container, afterEl=null){
     const qWrap=document.createElement('div');
-    const block=document.createElement('div'); block.className='block';
+    const block=document.createElement('div'); 
+    block.className='block question'; /* Pastell-Verlauf nur für Fragen */
     const title=document.createElement('div'); title.className='block-title'; block.appendChild(title);
     const btnRow=document.createElement('div'); btnRow.className='btn-row';
     qWrap.appendChild(block); qWrap.appendChild(btnRow);
@@ -323,7 +345,7 @@
     }
   }
 
-  // === Formular (nur Backend-Submit) ===
+  // Formular (nur Backend-Submit)
   function openReportForm(){
     const formBlock=document.createElement('div'); formBlock.className='block';
     const title=document.createElement('div'); title.className='block-title'; title.textContent='Kontaktformular – Individueller Report';
