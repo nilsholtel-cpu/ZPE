@@ -13,13 +13,13 @@
   <style>
   /* === Theme (HR, hell & freundlich) === */
   :root{
-    --bg:#f7f8fb;             /* Seitenhintergrund */
-    --fg:#0f172a;             /* Text dunkel */
-    --primary:#2563eb;        /* Blau (HR-Accent) */
-    --accent:#22c55e;         /* unterstützender Akzent */
-    --card:#ffffff;           /* Kartenhintergrund */
-    --border:#e5e7eb;         /* zarte Rahmen */
-    --muted:#64748b;          /* Sekundärtext */
+    --bg:#f7f8fb;
+    --fg:#0f172a;
+    --primary:#2563eb;
+    --accent:#22c55e;
+    --card:#ffffff;
+    --border:#e5e7eb;
+    --muted:#64748b;
     --shadow:0 12px 40px rgba(2,6,23,.06);
   }
 
@@ -48,27 +48,18 @@
   .header-left{display:flex;align-items:center;gap:12px}
   .logo-dot{width:10px;height:10px;border-radius:50%;background:var(--primary);display:inline-block}
   .header h1{font-size:18px;margin:0;font-weight:600;letter-spacing:.2px;color:var(--fg)}
-  .badge{
-    font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:999px;
-    color:var(--muted); background:#fff;
-  }
+  .badge{font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:999px;color:var(--muted);background:#fff}
 
   /* Content / Typing */
   .type-area .line,.line{line-height:1.7}
   .type-area{font-family:'Roboto Mono',ui-monospace,Menlo,Consolas,monospace;font-size:14px;color:#0b1a37}
-  .type-area .cursor{
-    display:inline-block;width:8px;height:1.2em;background:var(--primary);
-    opacity:.6; vertical-align:-0.2em; animation:blink 1s steps(1,end) infinite;margin-left:6px;border-radius:1px;
-  }
+  .type-area .cursor{display:inline-block;width:8px;height:1.2em;background:var(--primary);opacity:.6;vertical-align:-0.2em;animation:blink 1s steps(1,end) infinite;margin-left:6px;border-radius:1px}
   @keyframes blink{50%{opacity:0}}
 
   .hidden{display:none}
 
   /* Blöcke / Buttons */
-  .block{
-    border:1px solid var(--border);
-    border-radius:12px;padding:16px;margin:18px 0;background:#fff;transition:opacity .6s ease
-  }
+  .block{border:1px solid var(--border);border-radius:12px;padding:16px;margin:18px 0;background:#fff;transition:opacity .6s ease}
   .block-title{opacity:.9;margin-bottom:10px;color:#0b1a37;font-weight:600}
   .text{opacity:.95;line-height:1.75}
 
@@ -81,52 +72,30 @@
   .btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(2,6,23,.06);border-color:#cbd5e1}
   .btn:active{transform:translateY(0)}
   .btn[disabled]{opacity:.55;cursor:not-allowed}
-
-  /* Primärer Call-to-Action */
-  .btn.primary{
-    background:var(--primary); color:#fff; border-color:var(--primary);
-  }
+  .btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
   .btn.primary:hover{box-shadow:0 8px 24px rgba(37,99,235,.25)}
 
   .muted{margin-top:8px;color:var(--muted);font-size:13px}
 
-  .footer{
-    margin-top:24px;padding-top:16px;border-top:1px solid var(--border);
-    display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted)
-  }
+  .footer{margin-top:24px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
 
   .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
   .form-grid .full{grid-column:1 / -1}
   label{font-size:12px;color:#334155;margin-bottom:6px;display:block}
-  input{
-    width:100%;padding:10px 12px;background:#fff;border:1px solid var(--border);border-radius:10px;color:inherit;font-family:inherit
-  }
+  input{width:100%;padding:10px 12px;background:#fff;border:1px solid var(--border);border-radius:10px;color:inherit;font-family:inherit}
   input:focus{outline:2px solid rgba(37,99,235,.2);border-color:#bfdbfe}
   .hint{font-size:12px;color:var(--muted);margin-top:6px}
   .ok{color:#16a34a}.err{color:#dc2626}
-
   .dim{opacity:.35}
 
   /* Intro-Bereich nach Typing – extra Luft */
-  .intro{
-    margin-top:32px; /* zusätzlicher Abstand zwischen Boot-Lines und den drei Fragen */
-  }
-  .intro h2{
-    margin:0 0 10px 0;
-    font-size:16px;
-    font-weight:600;
-    color:#0b1a37;
-  }
+  .intro{margin-top:32px}
+  .intro h2{margin:0 0 10px 0;font-size:16px;font-weight:600;color:#0b1a37}
   .intro .line{color:#0b1a37}
 
   /* Nur die Frage-Blöcke mit sanftem Pastell-Verlauf */
-  .block.question{
-    background: linear-gradient(135deg, #f5f9ff 0%, #fff6f9 60%, #ffffff 100%);
-    border-color:#e6eefc;
-  }
-  .block.question .block-title{
-    color:#0b1a37;
-  }
+  .block.question{background:linear-gradient(135deg,#f5f9ff 0%,#fff6f9 60%,#ffffff 100%);border-color:#e6eefc}
+  .block.question .block-title{color:#0b1a37}
   </style>
 </head>
 <body>
@@ -168,45 +137,57 @@
     headline: 'Willkommen bei techconsult – HR Insights für Entscheider:innen.',
     calendarUrl: 'https://outlook.office.com/book/techconsultGmbHNilsHoltel@techconsult.de/',
     reportEmail: 'nils.holtel@techconsult.de',
-    apiUrl: '/api/lead', // Vercel Serverless Endpoint (unverändert)
+    apiUrl: '/api/lead',
 
+    /* === Fragenstrecke mit deinen Benchmark-Texten === */
     quiz: [
       {
         id: 'q1_invest',
-        text: 'Wie wichtig werden Investitionen in Marktforschung & Wettbewerbsanalysen für Ihr Unternehmen bis 2026?',
+        text: 'Frage 1 – Wie wichtig werden Investitionen in Marktforschung & Wettbewerbsanalysen bis 2026?',
         options: [
-          { label: 'Sehr wichtig – wir bauen das aus', key: 'invest_high', benchmark: '62% der Anbieter investieren bis 2026 gezielt in Market Intelligence – Orientierung wird entscheidend.' },
-          { label: 'Mittel – punktuell geplant', key: 'invest_mid', benchmark: 'Viele planen punktuelle Analysen: Fokus auf kritische Entscheidungen und Wettbewerbssituationen.' },
-          { label: 'Gering – bisher kein Fokus', key: 'invest_low', benchmark: 'Geringer Fokus birgt Risiko: fehlende Markttransparenz verlängert Zyklen und erschwert Priorisierung.' }
+          { label: 'Sehr wichtig – wir bauen das aus', key: 'invest_high', benchmark: '„Über die Hälfte der Unternehmen plant höhere Investitionen in Markt- und Wettbewerbsanalysen bis 2026 – gerade um strategische Weichen früh abzusichern.“' },
+          { label: 'Mittel – punktuell geplant', key: 'invest_mid', benchmark: '„Rund ein Drittel setzt Marktforschung selektiv bei großen HR-/IT-Projekten ein – als Entscheidungshilfe für kritische Investitionen.“' },
+          { label: 'Gering – bisher kein Fokus', key: 'invest_low', benchmark: '„Nur ca. 15 % der Firmen verzichten ganz auf eigene Analysen – riskieren dadurch aber längere Auswahlzyklen und weniger Markttransparenz.“' }
         ]
       },
       {
         id: 'q2_gtm',
-        text: 'Wo erwarten Sie die größten Veränderungen in Ihrem Go-to-Market bis 2026?',
+        text: 'Frage 2 – Wo erwarten Sie die größten Veränderungen in Ihrer HR-Strategie bis 2026?',
         options: [
-          { label: 'Neue Zielmärkte / Branchen', key: 'gtm_newmarkets', benchmark: 'Neue Verticals beschleunigen Wachstum – wenn Messaging & Use-Cases passen.' },
-          { label: 'Vertriebsmodell neu ausrichten', key: 'gtm_salesmodel', benchmark: 'Neuausrichtung Direkt/Partner wirkt stark – klare ICP-Definitionen sind der Hebel.' },
-          { label: 'Marketing & Kommunikation verstärken', key: 'gtm_marketing', benchmark: '43% priorisieren bis 2026 eine Schärfung der Marketing- & Kommunikationsstrategie.' },
-          { label: 'Customer Experience ausbauen', key: 'gtm_cx', benchmark: 'Investitionen in CX wirken doppelt: Bindung steigt, Weiterempfehlungen auch.' }
+          { label: 'Neue Zielmärkte / Branchen', key: 'gtm_newmarkets', benchmark: '„Ca. 40 % der Unternehmen planen den Schritt in neue Branchen oder Märkte – entscheidend sind dabei differenzierte HR-Angebote und klares Talent-Messaging.“' },
+          { label: 'Vertriebs-/Recruitingmodell neu ausrichten', key: 'gtm_salesmodel', benchmark: '„Ein Drittel richtet Strukturen in Recruiting und HR neu aus – Digitalisierung & direkte Candidate Journeys sind Haupttreiber.“' },
+          { label: 'Marketing & Kommunikation verstärken', key: 'gtm_marketing', benchmark: '„Über 30 % der Firmen investieren stärker in HR-Marketing, da Sichtbarkeit die Top-Priorität im War for Talent ist.“' },
+          { label: 'Employee / Candidate Experience ausbauen', key: 'gtm_cx', benchmark: '„Knapp die Hälfte der Unternehmen fokussieren sich auf Experience-Programme – Feedback & Benchmark-Vergleiche beschleunigen hier spürbar die Wirkung.“' }
         ]
       },
       {
         id: 'q3_ratings',
-        text: 'Welche Rolle spielen unabhängige User Ratings & Analysten-Benchmarks (PUR) für Sie bis 2026?',
+        text: 'Frage 3 – Welche Rolle spielen unabhängige User Ratings & Analysten-Benchmarks (PUR) bis 2026?',
         options: [
-          { label: 'Sehr relevant – beeinflusst Marktauftritt', key: 'ratings_high', benchmark: 'Fast zwei Drittel setzen bis 2026 auf Ratings, um Vertrauen aufzubauen.' },
-          { label: 'Mittel – nice to have, ergänzend', key: 'ratings_mid', benchmark: 'Ergänzend genutzt bieten Ratings schnelle Orientierung & stärken den Mid-Funnel.' },
-          { label: 'Niedrig – wir setzen auf andere Differenzierung', key: 'ratings_low', benchmark: 'Eigene Differenzierung kann tragen – externer Proof erleichtert dennoch Freigaben.' }
+          { label: 'Sehr relevant – beeinflusst Marktauftritt', key: 'ratings_high', benchmark: '„Rund zwei Drittel setzen bis 2026 aktiv auf Ratings – weil Vergleichbarkeit Vertrauen schafft und Marktposition sichtbar macht.“' },
+          { label: 'Mittel – nice to have, ergänzend', key: 'ratings_mid', benchmark: '„Etwa 30 % nutzen Ratings punktuell – häufig zur Absicherung bei HR-Software-Investitionen oder Employer-Branding-Maßnahmen.“' },
+          { label: 'Niedrig – wir setzen auf andere Differenzierung', key: 'ratings_low', benchmark: '„Nur eine Minderheit (unter 15 %) verlässt sich allein auf interne Stärken – läuft damit Gefahr, in Entscheidungsprozessen an Sichtbarkeit zu verlieren.“' }
         ]
       },
       {
         id: 'q4_growth',
-        text: 'Welcher Hebel stärkt Ihre Marktposition bis 2026 am meisten?',
+        text: 'Frage 4 – Welcher Hebel stärkt Ihre Marktposition bis 2026 am meisten?',
         options: [
-          { label: 'Markenbekanntheit steigern', key: 'growth_brand', benchmark: 'Brand-Invest erhöht Recall & Pull – Meeting-Quote steigt bei klarer Positionierung.' },
-          { label: 'Wettbewerbsposition schärfen', key: 'growth_competition', benchmark: 'Transparente Vergleiche verkürzen Auswahlzyklen & unterstützen Leadership-Narrative.' },
-          { label: 'Differenzierung über Innovation', key: 'growth_innovation', benchmark: 'Innovationsgetriebene Anbieter gewinnen schneller Sichtbarkeit & Mindshare.' },
-          { label: 'Sichtbarkeit durch Referenzen & Ratings', key: 'growth_ratings', benchmark: 'Sichtbare Differenzierung über Referenzen & Ratings wird häufig als entscheidender Growth-Faktor gesehen.' }
+          { label: 'Markenbekanntheit steigern', key: 'growth_brand', benchmark: '„Über 40 % sehen Sichtbarkeit & Brand als Hauptfaktor für HR-Erfolg – Benchmark-Daten dienen hier zunehmend als Türöffner.“' },
+          { label: 'Wettbewerbsposition schärfen', key: 'growth_competition', benchmark: '„Ein Drittel fokussiert sich klar auf Differenzierung – Transparenz durch Vergleichsdaten gilt als entscheidender Treiber.“' },
+          { label: 'Differenzierung über Innovation', key: 'growth_innovation', benchmark: '„Ca. 25 % der Unternehmen positionieren sich über Innovation – Benchmark-Trends zeigen, welche Ansätze wirklich Resonanz erzeugen.“' },
+          { label: 'Sichtbarkeit durch Referenzen & Ratings', key: 'growth_ratings', benchmark: '„Zwei von drei Firmen setzen gezielt auf externe Belege (Referenzen, PUR-Auszeichnungen), um Neukunden & Talente schneller von sich zu überzeugen.“' }
+        ]
+      },
+      {
+        id: 'q5_trends',
+        text: 'Frage 5 – Welche HR-Themen sehen Sie als wichtigste Zukunftstrends bis 2026?',
+        options: [
+          { label: 'HR-Digitalisierung & Automatisierung (z. B. KI-gestützte Prozesse)', key: 'trend_digital' , benchmark: '„Digitale HR-Prozesse sind die klare Nr. 1 – über 60 % der Unternehmen priorisieren Automatisierung, um Effizienz & Datenqualität zu sichern.“' },
+          { label: 'Employee Experience & Wellbeing', key: 'trend_ex', benchmark: '„Knapp die Hälfte der HR-Teams setzt auf verbesserte Mitarbeitererlebnisse – Top-Faktor für Bindung & Arbeitgeberattraktivität.“' },
+          { label: 'Fachkräftesicherung & Talent-Pipeline', key: 'trend_talent', benchmark: '„70 % nennen Talentmangel als größte Herausforderung – Benchmarks helfen, realistische Erfolgsstrategien im Recruiting abzuleiten.“' },
+          { label: 'New Work & hybride Arbeitsmodelle', key: 'trend_newwork', benchmark: '„40 % nutzen hybride Modelle als festes Element – Flexibilität wird damit vom Zusatz zum Wettbewerbsfaktor.“' },
+          { label: 'Nachhaltigkeit & Diversity im HR', key: 'trend_sustain', benchmark: '„Ein wachsender Anteil (jedes dritte Unternehmen) koppelt HR-Strategien an ESG & Vielfalt – für viele bereits ein klares Differenzierungskriterium im Employer Branding.“' }
         ]
       }
     ]
@@ -254,8 +235,8 @@
 
   async function showQuestion(idx, container, afterEl=null){
     const qWrap=document.createElement('div');
-    const block=document.createElement('div'); 
-    block.className='block question'; /* Pastell-Verlauf nur für Fragen */
+    const block=document.createElement('div');
+    block.className='block question';
     const title=document.createElement('div'); title.className='block-title'; block.appendChild(title);
     const btnRow=document.createElement('div'); btnRow.className='btn-row';
     qWrap.appendChild(block); qWrap.appendChild(btnRow);
@@ -279,6 +260,7 @@
     const benchTitle=document.createElement('div'); benchTitle.className='block-title'; benchTitle.textContent='Benchmark-Einordnung:';
     benchBlock.appendChild(benchTitle);
     insertAfter(resultArea,benchBlock,sysBlock);
+    // Tippe den spezifischen Benchmark-Satz
     await typeLineInto(benchBlock, opt.benchmark, 14, myRun); if(myRun!==runId) return;
 
     setTimeout(()=>{ sysBlock.classList.add('dim'); }, 200);
@@ -298,8 +280,8 @@
     const q2=answers['q2_gtm'];
     if(q2==='Marketing & Kommunikation verstärken') builder+=2;
     if(q2==='Neue Zielmärkte / Branchen') challenger+=2;
-    if(q2==='Vertriebsmodell neu ausrichten') challenger+=2;
-    if(q2==='Customer Experience ausbauen'){ builder+=1; innovator+=1; }
+    if(q2==='Vertriebs-/Recruitingmodell neu ausrichten') challenger+=2;
+    if(q2==='Employee / Candidate Experience ausbauen'){ builder+=1; innovator+=1; }
     const q3=answers['q3_ratings'];
     if(q3?.startsWith('Sehr relevant')) builder+=2; else if(q3?.startsWith('Mittel')) builder+=1; else challenger+=1;
     const q4=answers['q4_growth'];
@@ -307,6 +289,7 @@
     if(q4==='Wettbewerbsposition schärfen') challenger+=2;
     if(q4==='Differenzierung über Innovation') innovator+=3;
     if(q4==='Sichtbarkeit durch Referenzen & Ratings') builder+=3;
+
     const scores=[{key:'Market Builder',v:builder},{key:'Innovator',v:innovator},{key:'Challenger',v:challenger}].sort((a,b)=>b.v-a.v);
     return scores[0].key;
   }
@@ -314,22 +297,16 @@
   async function analyseAndMission(myRun){
     const profile=computeProfile();
 
-    // 1) "Analyse abgeschlossen."
     const endBlock=document.createElement('div'); endBlock.className='block'; resultArea.appendChild(endBlock);
     await typeLineInto(endBlock, 'Analyse abgeschlossen.', 14, myRun); if(myRun!==runId) return;
 
-    // 1b) NEU: zusätzlicher Satz mit 🎉
     const cheers=document.createElement('div'); cheers.className='line';
     cheers.textContent='Ihre Antworten sind eingegangen – jetzt beginnt Ihr Wissensvorsprung 🎉';
     endBlock.appendChild(cheers);
 
     await new Promise(r=>setTimeout(r,260));
-
-    // 2) Profil
     const profBlock=document.createElement('div'); profBlock.className='block'; resultArea.appendChild(profBlock);
     await typeLineInto(profBlock, `Ihr Zukunftsprofil 2026: ${profile}`, 14, myRun); if(myRun!==runId) return;
-
-    // 3) Nächster Schritt (mit neuen Texten & Optionen)
     await missionSequence(myRun, true, profile);
   }
 
@@ -339,7 +316,6 @@
     const missionP=document.createElement('div'); missionP.className='text';
     block2.appendChild(title2); block2.appendChild(missionP); resultArea.appendChild(block2); scrollToBottom();
 
-    // NEU: ersetzter Text unter "Nächster Schritt"
     const r2=await typeLineInto(
       missionP,
       'Sie erhalten in Kürze exklusiven Zugang zu unseren Vorab-Insights und Benchmarks für 2026.\nWenn Sie möchten, können wir Ihre Antworten direkt mit relevanten Markttrends abgleichen und daraus ein individuelles Zukunftsprofil erstellen – selbstverständlich kostenfrei und unverbindlich.',
@@ -347,39 +323,23 @@
     );
     if(r2==='aborted'||myRun!==runId) return;
 
-    // Handlungsoptionen
     const btnRow=document.createElement('div'); btnRow.className='btn-row'; btnRow.style.marginTop='10px';
 
-    // ✅ Termin vereinbaren
     const a1=document.createElement('a');
     a1.className='btn primary';
     a1.id='ctaCalendar';
     a1.href=CONFIG.calendarUrl;
     a1.target='_blank';
     a1.rel='noopener noreferrer';
-    a1.textContent='✅ Ja, Termin vereinbaren & Zukunftsprofil besprechen';
+    a1.textContent='✅ Ja, ich möchte einen Termin vereinbaren und mein Zukunftsprofil besprechen';
 
-    // 📄 Ergebnisse per Mail senden (öffnet Mini-Formular)
     const b2=document.createElement('button');
     b2.className='btn';
     b2.type='button';
-    b2.textContent='📄 Ergebnisse per Mail zusenden';
+    b2.textContent='📄 Bitte senden Sie mir die Ergebnisse per Mail zu';
     b2.addEventListener('click', ()=>openMailForm());
 
-    // ⏳ Kein Termin gewünscht (nur Bestätigung)
-    const b3=document.createElement('button');
-    b3.className='btn';
-    b3.type='button';
-    b3.textContent='⏳ Ich informiere mich erst einmal nur – kein Termin';
-    b3.addEventListener('click', ()=>{
-      const info=document.createElement('div');
-      info.className='hint';
-      info.textContent='Alles klar – wir senden Ihnen in Kürze Vorab-Insights. Sie können jederzeit später einen Termin vereinbaren.';
-      block2.appendChild(info);
-      info.scrollIntoView({behavior:'smooth',block:'center'});
-    });
-
-    btnRow.appendChild(a1); btnRow.appendChild(b2); btnRow.appendChild(b3);
+    btnRow.appendChild(a1); btnRow.appendChild(b2);
     block2.appendChild(btnRow); scrollToBottom();
 
     if(focusCalendar){
@@ -419,7 +379,6 @@
       }
       msg.textContent='Wird gesendet…'; msg.className='hint';
       try{
-        // nutzt denselben API-Endpunkt; answers aus dem Quiz werden mitgeschickt
         const payload={ name, company, email, answers: (typeof answers==='object'? answers : {}) };
         const res=await fetch(CONFIG.apiUrl,{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
         if(!res.ok) throw new Error(await res.text());
