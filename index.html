@@ -253,17 +253,15 @@
   async function handleAnswer(idx,opt,qWrap){
     const myRun=++runId; const q=CONFIG.quiz[idx]; answers[q.id]=opt.label;
 
-    // Auswahl-Feedback (getippt)
     const sysBlock=document.createElement('div'); sysBlock.className='block'; insertAfter(resultArea,sysBlock,qWrap);
     await typeLineInto(sysBlock, `Auswahl bestätigt: ${opt.label}`, 14, myRun); if(myRun!==runId) return;
 
-    // Benchmark-Block (ÄNDERUNG 1: sofort anzeigen, kein Tippen)
     const benchBlock=document.createElement('div'); benchBlock.className='block';
     const benchTitle=document.createElement('div'); benchTitle.className='block-title'; benchTitle.textContent='Benchmark-Einordnung:';
-    const benchText=document.createElement('div'); benchText.className='text';
-    benchText.textContent = opt.benchmark; // <-- sofort, ohne typewriter
-    benchBlock.appendChild(benchTitle); benchBlock.appendChild(benchText);
+    benchBlock.appendChild(benchTitle);
     insertAfter(resultArea,benchBlock,sysBlock);
+    // Tippe den spezifischen Benchmark-Satz
+    await typeLineInto(benchBlock, opt.benchmark, 14, myRun); if(myRun!==runId) return;
 
     setTimeout(()=>{ sysBlock.classList.add('dim'); }, 200);
     await new Promise(r=>setTimeout(r,500)); if(myRun!==runId) return;
@@ -273,7 +271,6 @@
     else { showQuestion(nextIndex, resultArea, benchBlock); }
   }
 
-  // Profil-Berechnung bleibt bestehen, wird aber NICHT mehr angezeigt (ÄNDERUNG 2)
   function computeProfile(){
     let innovator=0, challenger=0, builder=0;
     const q1=answers['q1_invest'];
@@ -292,12 +289,14 @@
     if(q4==='Wettbewerbsposition schärfen') challenger+=2;
     if(q4==='Differenzierung über Innovation') innovator+=3;
     if(q4==='Sichtbarkeit durch Referenzen & Ratings') builder+=3;
+
     const scores=[{key:'Market Builder',v:builder},{key:'Innovator',v:innovator},{key:'Challenger',v:challenger}].sort((a,b)=>b.v-a.v);
     return scores[0].key;
   }
 
   async function analyseAndMission(myRun){
-    // computeProfile(); // optional, aktuell nicht genutzt
+    const profile=computeProfile();
+
     const endBlock=document.createElement('div'); endBlock.className='block'; resultArea.appendChild(endBlock);
     await typeLineInto(endBlock, 'Analyse abgeschlossen.', 14, myRun); if(myRun!==runId) return;
 
@@ -306,10 +305,12 @@
     endBlock.appendChild(cheers);
 
     await new Promise(r=>setTimeout(r,260));
-    await missionSequence(myRun, true);
+    const profBlock=document.createElement('div'); profBlock.className='block'; resultArea.appendChild(profBlock);
+    await typeLineInto(profBlock, `Ihr Zukunftsprofil 2026: ${profile}`, 14, myRun); if(myRun!==runId) return;
+    await missionSequence(myRun, true, profile);
   }
 
-  async function missionSequence(myRun, focusCalendar=true){
+  async function missionSequence(myRun, focusCalendar=true, profile=''){
     const block2=document.createElement('div'); block2.className='block';
     const title2=document.createElement('div'); title2.className='block-title'; title2.textContent='Nächster Schritt';
     const missionP=document.createElement('div'); missionP.className='text';
@@ -324,19 +325,18 @@
 
     const btnRow=document.createElement('div'); btnRow.className='btn-row'; btnRow.style.marginTop='10px';
 
-    // ÄNDERUNG 3: Button-Texte angepasst
     const a1=document.createElement('a');
     a1.className='btn primary';
     a1.id='ctaCalendar';
     a1.href=CONFIG.calendarUrl;
     a1.target='_blank';
     a1.rel='noopener noreferrer';
-    a1.textContent='✅ Termin vereinbaren: PUR-Benchmarks im Gespräch';
+    a1.textContent='✅ Ja, ich möchte einen Termin vereinbaren und mein Zukunftsprofil besprechen';
 
     const b2=document.createElement('button');
     b2.className='btn';
     b2.type='button';
-    b2.textContent='📄 Exklusive PUR-Insights per Mail';
+    b2.textContent='📄 Bitte senden Sie mir die Ergebnisse per Mail zu';
     b2.addEventListener('click', ()=>openMailForm());
 
     btnRow.appendChild(a1); btnRow.appendChild(b2);
@@ -351,7 +351,7 @@
   // Mini-Formular "Ergebnisse per Mail"
   function openMailForm(){
     const formBlock=document.createElement('div'); formBlock.className='block';
-    const title=document.createElement('div'); title.className='block-title'; title.textContent='Exklusive PUR-Insights per Mail';
+    const title=document.createElement('div'); title.className='block-title'; title.textContent='Ergebnisse per Mail erhalten';
     formBlock.appendChild(title);
 
     const form=document.createElement('form'); form.setAttribute('novalidate','novalidate');
