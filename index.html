@@ -313,11 +313,23 @@
 
   async function analyseAndMission(myRun){
     const profile=computeProfile();
+
+    // 1) "Analyse abgeschlossen."
     const endBlock=document.createElement('div'); endBlock.className='block'; resultArea.appendChild(endBlock);
     await typeLineInto(endBlock, 'Analyse abgeschlossen.', 14, myRun); if(myRun!==runId) return;
+
+    // 1b) NEU: zusätzlicher Satz mit 🎉
+    const cheers=document.createElement('div'); cheers.className='line';
+    cheers.textContent='Ihre Antworten sind eingegangen – jetzt beginnt Ihr Wissensvorsprung 🎉';
+    endBlock.appendChild(cheers);
+
     await new Promise(r=>setTimeout(r,260));
+
+    // 2) Profil
     const profBlock=document.createElement('div'); profBlock.className='block'; resultArea.appendChild(profBlock);
     await typeLineInto(profBlock, `Ihr Zukunftsprofil 2026: ${profile}`, 14, myRun); if(myRun!==runId) return;
+
+    // 3) Nächster Schritt (mit neuen Texten & Optionen)
     await missionSequence(myRun, true, profile);
   }
 
@@ -327,17 +339,48 @@
     const missionP=document.createElement('div'); missionP.className='text';
     block2.appendChild(title2); block2.appendChild(missionP); resultArea.appendChild(block2); scrollToBottom();
 
+    // NEU: ersetzter Text unter "Nächster Schritt"
     const r2=await typeLineInto(
       missionP,
-      'Ihre Analyse ist abgeschlossen. Um den vollständigen PUR-Report für Ihr Unternehmen zu erhalten, vereinbaren Sie einen Termin oder fordern Sie den individuellen Report an.',
+      'Sie erhalten in Kürze exklusiven Zugang zu unseren Vorab-Insights und Benchmarks für 2026.\nWenn Sie möchten, können wir Ihre Antworten direkt mit relevanten Markttrends abgleichen und daraus ein individuelles Zukunftsprofil erstellen – selbstverständlich kostenfrei und unverbindlich.',
       14,myRun
     );
     if(r2==='aborted'||myRun!==runId) return;
 
-    const btnRow=document.createElement('div'); btnRow.className='btn-row';
-    const a1=document.createElement('a'); a1.className='btn primary'; a1.id='ctaCalendar'; a1.href=CONFIG.calendarUrl; a1.target='_blank'; a1.rel='noopener noreferrer'; a1.textContent='Termin vereinbaren';
-    const b2=document.createElement('button'); b2.className='btn'; b2.type='button'; b2.textContent='Individuellen Report anfragen'; b2.addEventListener('click', ()=>openReportForm());
-    btnRow.appendChild(a1); btnRow.appendChild(b2); block2.appendChild(btnRow); scrollToBottom();
+    // Handlungsoptionen
+    const btnRow=document.createElement('div'); btnRow.className='btn-row'; btnRow.style.marginTop='10px';
+
+    // ✅ Termin vereinbaren
+    const a1=document.createElement('a');
+    a1.className='btn primary';
+    a1.id='ctaCalendar';
+    a1.href=CONFIG.calendarUrl;
+    a1.target='_blank';
+    a1.rel='noopener noreferrer';
+    a1.textContent='✅ Ja, Termin vereinbaren & Zukunftsprofil besprechen';
+
+    // 📄 Ergebnisse per Mail senden (öffnet Mini-Formular)
+    const b2=document.createElement('button');
+    b2.className='btn';
+    b2.type='button';
+    b2.textContent='📄 Ergebnisse per Mail zusenden';
+    b2.addEventListener('click', ()=>openMailForm());
+
+    // ⏳ Kein Termin gewünscht (nur Bestätigung)
+    const b3=document.createElement('button');
+    b3.className='btn';
+    b3.type='button';
+    b3.textContent='⏳ Ich informiere mich erst einmal nur – kein Termin';
+    b3.addEventListener('click', ()=>{
+      const info=document.createElement('div');
+      info.className='hint';
+      info.textContent='Alles klar – wir senden Ihnen in Kürze Vorab-Insights. Sie können jederzeit später einen Termin vereinbaren.';
+      block2.appendChild(info);
+      info.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+
+    btnRow.appendChild(a1); btnRow.appendChild(b2); btnRow.appendChild(b3);
+    block2.appendChild(btnRow); scrollToBottom();
 
     if(focusCalendar){
       const el=document.getElementById('ctaCalendar');
@@ -345,10 +388,10 @@
     }
   }
 
-  // Formular (nur Backend-Submit)
-  function openReportForm(){
+  // Mini-Formular "Ergebnisse per Mail"
+  function openMailForm(){
     const formBlock=document.createElement('div'); formBlock.className='block';
-    const title=document.createElement('div'); title.className='block-title'; title.textContent='Kontaktformular – Individueller Report';
+    const title=document.createElement('div'); title.className='block-title'; title.textContent='Ergebnisse per Mail erhalten';
     formBlock.appendChild(title);
 
     const form=document.createElement('form'); form.setAttribute('novalidate','novalidate');
@@ -358,9 +401,9 @@
         <div><label for="company">Unternehmen</label><input id="company" name="company" placeholder="Firmenname" required /></div>
         <div><label for="email">Geschäftliche E-Mail</label><input id="email" name="email" placeholder="name@unternehmen.de" required /></div>
       </div>
-      <div class="hint">Wir nutzen Ihre Angaben ausschließlich zur Kontaktaufnahme für den individuellen Report.</div>
+      <div class="hint">Wir senden Ihnen Ihre Antworten zusammengefasst per E-Mail und stellen Vorab-Insights bereit.</div>
       <div class="btn-row" style="margin-top:12px;">
-        <button type="submit" class="btn primary">Anfrage senden</button>
+        <button type="submit" class="btn primary">Zusenden</button>
         <button type="button" class="btn" id="closeForm">Abbrechen</button>
       </div>
       <div id="formMsg" class="hint"></div>
@@ -376,10 +419,11 @@
       }
       msg.textContent='Wird gesendet…'; msg.className='hint';
       try{
+        // nutzt denselben API-Endpunkt; answers aus dem Quiz werden mitgeschickt
         const payload={ name, company, email, answers: (typeof answers==='object'? answers : {}) };
         const res=await fetch(CONFIG.apiUrl,{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
         if(!res.ok) throw new Error(await res.text());
-        msg.textContent='Danke! Wir melden uns mit Ihrem individuellen Report.'; msg.className='hint ok';
+        msg.textContent='Danke! Ihre Ergebnisse werden per E-Mail zugestellt.'; msg.className='hint ok';
         form.querySelectorAll('input,button[type="submit"]').forEach(i=>i.disabled=true);
       }catch(err){
         console.error(err);
