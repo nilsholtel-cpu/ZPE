@@ -5,8 +5,12 @@
 const nodemailer = require('nodemailer');
 
 /* ========== ENV ========== */
-const NOTION_SECRET = process.env.NOTION_SECRET;   // Notion Integration Secret (1x für alle DBs)
+const NOTION_SECRET = process.env.NOTION_SECRET;   // Notion Integration Secret
 const DB_LEADS      = process.env.NOTION_DB_ID;    // ID deiner Leads-Datenbank
+
+// Optional: schöner Absendername & Kalenderlink
+const MAIL_FROM_NAME = process.env.MAIL_FROM_NAME || 'techconsult Lead Desk';
+const CALENDAR_URL   = process.env.CALENDAR_URL || 'https://outlook.office.com/book/techconsultGmbHNilsHoltel@techconsult.de/';
 
 /* ========== Notion Helper ========== */
 async function notion(endpoint, method = 'POST', body) {
@@ -25,7 +29,7 @@ async function notion(endpoint, method = 'POST', body) {
   return txt ? JSON.parse(txt) : {};
 }
 
-/* ========== CSV Helper (optional Mail) ========== */
+/* ========== CSV Helper (Team/Salesforce Mail) ========== */
 function toCsvLine(values) {
   return values.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',');
 }
@@ -46,33 +50,120 @@ function buildCsv(payload) {
   return `${headers.join(',')}\n${toCsvLine(row)}`;
 }
 
-async function sendMailCSV(csv) {
+// SMTP Transport
+function buildTransport() {
   const host = process.env.SMTP_HOST || 'smtp.office365.com';
   const port = Number(process.env.SMTP_PORT || 587);
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
-  const to   = process.env.MAIL_TO || user;
+  if (!user || !pass) return null;
+  return nodemailer.createTransport({ host, port, secure: port === 465, auth: { user, pass } });
+}
+function fromAddress() {
+  const user = process.env.SMTP_USER || 'no-reply@example.com';
+  return `"${MAIL_FROM_NAME}" <${user}>`;
+}
 
-  // NEU: Salesforce-Email (Lead-Import-Adresse)
-  const sfBcc = "emailtosalesforce@l-2lps5na8lrt30zhe2o1n3dig6gdxmkk1cgnvjajf5dltn151ew.j6-jmpqmaw.eu50.le.salesforce.com";
+/* ========== 1) CSV an Team + BCC Salesforce ========== */
+// Deine feste Salesforce-Email-to-Lead-Adresse (direkt eingetragen)
+const SALESFORCE_BCC = "emailtosalesforce@l-2lps5na8lrt30zhe2o1n3dig6gdxmkk1cgnvjajf5dltn151ew.j6-jmpqmaw.eu50.le.salesforce.com";
 
-  if (!user || !pass) return { ok:false, skipped:true, reason:'SMTP not configured' };
+async function sendMailCSV(csv) {
+  const transporter = buildTransport();
+  if (!transporter) return { ok:false, skipped:true, reason:'SMTP not configured' };
 
-  const transporter = nodemailer.createTransport({
-    host, port, secure: port === 465,
-    auth: { user, pass },
-  });
+  const to = process.env.MAIL_TO || process.env.SMTP_USER;
 
   await transporter.sendMail({
-    from: `"Lead Intake" <${user}>`,
-    to,                     // du / Team
-    bcc: sfBcc || undefined, // NEU: BCC an Salesforce (nur wenn gesetzt)
+    from: fromAddress(),
+    to,
+    bcc: SALESFORCE_BCC, // Salesforce Import
     subject: 'Neuer Lead (CSV)',
-    text: csv,              // Body = CSV (für einfache Weiterverarbeitung)
+    text: csv,
     attachments: [{ filename: `lead_${Date.now()}.csv`, content: csv }],
   });
 
-  return { ok:true, bcc: Boolean(sfBcc) };
+  return { ok:true, bcc:true };
+}
+
+/* ========== 2) Bestätigungs-Mail an den Kunden (Early Access) ========== */
+async function sendCustomerConfirmation({ name, email, company }) {
+  const transporter = buildTransport();
+  if (!transporter) return { ok:false, skipped:true, reason:'SMTP not configured' };
+  if (!email) return { ok:false, skipped:true, reason:'No recipient email' };
+
+  const safeName = (name || '').trim();
+  const greetName = safeName ? safeName : 'und Team';
+
+  const subject = 'Willkommen zum Early Access: Ihre Insights folgen in Kürze';
+
+  const text = [
+    `Liebe/r ${greetName},`,
+    '',
+    'herzlichen Glückwunsch – Ihr Zugang zu den exklusiven Markt- und HR-Insights 2026 ist gesichert.',
+    'Damit gehören Sie zu den Ersten, die vor der offiziellen Veröffentlichung erfahren, welche Trends, Benchmarks und Wettbewerbsentwicklungen die nächsten Jahre prägen werden.',
+    '',
+    'Was Sie erwartet:',
+    '',
+    '📊 Erste Benchmark-Ergebnisse, die aktuelle Bewegungen am Markt sichtbar machen',
+    '🚀 Ihr persönliches Zukunftsprofil 2026',
+    '💡 Frühindikatoren für HR- und Go-to-Market-Strategien, die andere Unternehmen erst später erkennen',
+    '',
+    '👉 In wenigen Tagen erhalten Sie die ersten Insights direkt in Ihr Postfach.',
+    '',
+    'Falls Sie Ihre Ergebnisse gleich im persönlichen Gespräch vertiefen möchten, können Sie hier einen Termin wählen:',
+    'Jetzt 30-Minuten-Benchmark-Gespräch sichern: ' + CALENDAR_URL,
+    '',
+    'Wir freuen uns, Ihnen den entscheidenden Vorsprung zu verschaffen!',
+    '',
+    'Beste Grüße',
+    'Ihr techconsult Team'
+  ].join('\n');
+
+  const html = `
+    <div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-size:15px;line-height:1.6;color:#0f172a">
+      <p>Liebe/r ${escapeHtml(greetName)},</p>
+      <p>herzlichen Glückwunsch – Ihr Zugang zu den exklusiven Markt- und HR-Insights 2026 ist gesichert.<br/>
+      Damit gehören Sie zu den Ersten, die vor der offiziellen Veröffentlichung erfahren, welche Trends, Benchmarks und Wettbewerbsentwicklungen die nächsten Jahre prägen werden.</p>
+
+      <p><strong>Was Sie erwartet:</strong></p>
+      <ul style="margin-top:6px">
+        <li>📊 Erste Benchmark-Ergebnisse, die aktuelle Bewegungen am Markt sichtbar machen</li>
+        <li>🚀 Ihr persönliches Zukunftsprofil 2026</li>
+        <li>💡 Frühindikatoren für HR- und Go-to-Market-Strategien, die andere Unternehmen erst später erkennen</li>
+      </ul>
+
+      <p>👉 In wenigen Tagen erhalten Sie die ersten Insights direkt in Ihr Postfach.</p>
+
+      <p>Falls Sie Ihre Ergebnisse gleich im persönlichen Gespräch vertiefen möchten, können Sie hier einen Termin wählen:</p>
+      <p>
+        <a href="${escapeHtml(CALENDAR_URL)}"
+           style="display:inline-block;padding:10px 14px;border-radius:8px;text-decoration:none;background:#2563eb;color:#fff">
+           🔹 Jetzt 30-Minuten-Benchmark-Gespräch sichern
+        </a>
+      </p>
+
+      <p>Wir freuen uns, Ihnen den entscheidenden Vorsprung zu verschaffen!</p>
+
+      <p>Beste Grüße<br/>Ihr techconsult Team</p>
+    </div>
+  `;
+
+  await transporter.sendMail({
+    from: fromAddress(),
+    to: email,
+    subject,
+    text,
+    html
+  });
+
+  return { ok:true };
+}
+
+function escapeHtml(s='') {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 /* ========== Notion: Lead anlegen ========== */
@@ -80,7 +171,6 @@ async function sendMailCSV(csv) {
  * Erwartete Spalten in deiner Leads-DB:
  * Name (Title), Company (Text), Email (Email), Profile (Text),
  * Q1 (Text), Q2 (Text), Q3 (Text), Q4 (Text)
- * (Alles weitere — Formeln/Relations — rechnet Notion selbst.)
  */
 async function createLeadPage(payload) {
   if (!DB_LEADS) throw new Error('NOTION_DB_ID missing');
@@ -104,7 +194,7 @@ async function createLeadPage(payload) {
 
 /* ========== HTTP Handler ========== */
 module.exports = async (req, res) => {
-  // CORS (falls dein Frontend auf anderer Domain ist)
+  // CORS
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -125,15 +215,26 @@ module.exports = async (req, res) => {
       return res.status(400).json({ ok:false, error:'Missing required fields (name, company, email)' });
     }
 
-    // 1) Lead anlegen
+    // 1) Lead in Notion anlegen
     const lead = await createLeadPage(payload);
 
-    // 2) (optional) CSV-Mail
+    // 2) CSV an Team + BCC an Salesforce
     const csv = buildCsv(payload);
-    let mail = { ok:false, skipped:true };
-    try { mail = await sendMailCSV(csv); } catch (e) { console.warn('mail failed:', e.message); }
+    let mailTeam = { ok:false, skipped:true };
+    try { mailTeam = await sendMailCSV(csv); } catch (e) { console.warn('mailTeam failed:', e.message); }
 
-    return res.status(200).json({ ok:true, leadId: lead.id, mail });
+    // 3) Bestätigung an Kunden (Early Access)
+    let mailCustomer = { ok:false, skipped:true };
+    try { mailCustomer = await sendCustomerConfirmation({ name, email, company }); } catch (e) { console.warn('mailCustomer failed:', e.message); }
+
+    return res.status(200).json({
+      ok: true,
+      leadId: lead.id,
+      mail: {
+        team: mailTeam,
+        customer: mailCustomer
+      }
+    });
   } catch (e) {
     console.error('lead handler error:', e?.message || e);
     return res.status(500).json({ ok:false, error: e?.message || 'Server error' });
