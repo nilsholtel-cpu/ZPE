@@ -11,74 +11,36 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
-  /* === Theme (HR, hell & freundlich) === */
   :root{
-    --bg:#f7f8fb;
-    --fg:#0f172a;
-    --primary:#2563eb;
-    --accent:#22c55e;
-    --card:#ffffff;
-    --border:#e5e7eb;
-    --muted:#64748b;
-    --shadow:0 12px 40px rgba(2,6,23,.06);
+    --bg:#f7f8fb; --fg:#0f172a; --primary:#2563eb; --accent:#22c55e; --card:#ffffff;
+    --border:#e5e7eb; --muted:#64748b; --shadow:0 12px 40px rgba(2,6,23,.06);
   }
-
   *{box-sizing:border-box}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--fg);
-    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
-    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-  }
-
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
   .wrap{min-height:100vh;display:grid;place-items:center;padding:28px}
-  .card{
-    width:min(980px,100%);
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:28px;
-    position:relative;
-    box-shadow:var(--shadow);
-  }
-
-  /* Header */
+  .card{width:min(980px,100%);background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;position:relative;box-shadow:var(--shadow)}
   .header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
   .header-left{display:flex;align-items:center;gap:12px}
   .logo-dot{width:10px;height:10px;border-radius:50%;background:var(--primary);display:inline-block}
   .header h1{font-size:18px;margin:0;font-weight:600;letter-spacing:.2px;color:var(--fg)}
   .badge{font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:999px;color:var(--muted);background:#fff}
-
-  /* Content / Typing */
   .type-area .line,.line{line-height:1.7}
   .type-area{font-family:'Roboto Mono',ui-monospace,Menlo,Consolas,monospace;font-size:14px;color:#0b1a37}
   .type-area .cursor{display:inline-block;width:8px;height:1.2em;background:var(--primary);opacity:.6;vertical-align:-0.2em;animation:blink 1s steps(1,end) infinite;margin-left:6px;border-radius:1px}
   @keyframes blink{50%{opacity:0}}
-
   .hidden{display:none}
-
-  /* Blöcke / Buttons */
   .block{border:1px solid var(--border);border-radius:12px;padding:16px;margin:18px 0;background:#fff;transition:opacity .6s ease}
   .block-title{opacity:.9;margin-bottom:10px;color:#0b1a37;font-weight:600}
   .text{opacity:.95;line-height:1.75}
-
   .btn-row{display:flex;gap:10px;flex-wrap:wrap}
-  .btn{
-    appearance:none;background:#fff;color:#0b1a37;border:1px solid var(--border);
-    border-radius:10px;padding:10px 14px;font-family:inherit;font-size:14px;cursor:pointer;
-    text-decoration:none;display:inline-block;transition:transform .06s ease,box-shadow .2s ease,border-color .2s ease;
-  }
+  .btn{appearance:none;background:#fff;color:#0b1a37;border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-family:inherit;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;transition:transform .06s ease,box-shadow .2s ease,border-color .2s ease}
   .btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(2,6,23,.06);border-color:#cbd5e1}
   .btn:active{transform:translateY(0)}
   .btn[disabled]{opacity:.55;cursor:not-allowed}
   .btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
   .btn.primary:hover{box-shadow:0 8px 24px rgba(37,99,235,.25)}
-
   .muted{margin-top:8px;color:var(--muted);font-size:13px}
-
   .footer{margin-top:24px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
-
   .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
   .form-grid .full{grid-column:1 / -1}
   label{font-size:12px;color:#334155;margin-bottom:6px;display:block}
@@ -87,13 +49,9 @@
   .hint{font-size:12px;color:var(--muted);margin-top:6px}
   .ok{color:#16a34a}.err{color:#dc2626}
   .dim{opacity:.35}
-
-  /* Intro-Bereich nach Typing – extra Luft */
   .intro{margin-top:32px}
   .intro h2{margin:0 0 10px 0;font-size:16px;font-weight:600;color:#0b1a37}
   .intro .line{color:#0b1a37}
-
-  /* Nur die Frage-Blöcke mit sanftem Pastell-Verlauf */
   .block.question{background:linear-gradient(135deg,#f5f9ff 0%,#fff6f9 60%,#ffffff 100%);border-color:#e6eefc}
   .block.question .block-title{color:#0b1a37}
   </style>
@@ -139,7 +97,6 @@
     reportEmail: 'nils.holtel@techconsult.de',
     apiUrl: '/api/lead',
 
-    /* === Fragenstrecke mit deinen Benchmark-Texten === */
     quiz: [
       {
         id: 'q1_invest',
@@ -196,12 +153,12 @@
   // HR-Theme setzen
   document.documentElement.setAttribute('data-theme', 'hr');
 
-  // HR-Intro/Boot-Sequenz
+  // NEUE Boot-Sequenz (ersetzt die alte)
   const bootLines = [
-    'Willkommen zur HR-Zukunftsanalyse.',
-    'Messe-Badge erkannt – lassen Sie uns starten.',
-    'Wir richten die Fragen auf Ihr Unternehmen aus …',
-    'Analyse wird vorbereitet …',
+    'Willkommen bei den HR-Insights 2026.',
+    'Welche Trends zählen wirklich – Recruiting? Employee Experience? Digitalisierung?',
+    '',
+    'In unserer Kurz-Analyse vergleichen wir Ihre Einschätzung mit den Trends aus der HR-Community – faktenbasiert und kompakt.',
     '',
     CONFIG.headline
   ];
@@ -256,12 +213,13 @@
     const sysBlock=document.createElement('div'); sysBlock.className='block'; insertAfter(resultArea,sysBlock,qWrap);
     await typeLineInto(sysBlock, `Auswahl bestätigt: ${opt.label}`, 14, myRun); if(myRun!==runId) return;
 
+    // Benchmark sofort anzeigen (kein Tippen)
     const benchBlock=document.createElement('div'); benchBlock.className='block';
     const benchTitle=document.createElement('div'); benchTitle.className='block-title'; benchTitle.textContent='Benchmark-Einordnung:';
-    benchBlock.appendChild(benchTitle);
+    const benchText=document.createElement('div'); benchText.className='text';
+    benchText.textContent = opt.benchmark;
+    benchBlock.appendChild(benchTitle); benchBlock.appendChild(benchText);
     insertAfter(resultArea,benchBlock,sysBlock);
-    // Tippe den spezifischen Benchmark-Satz
-    await typeLineInto(benchBlock, opt.benchmark, 14, myRun); if(myRun!==runId) return;
 
     setTimeout(()=>{ sysBlock.classList.add('dim'); }, 200);
     await new Promise(r=>setTimeout(r,500)); if(myRun!==runId) return;
@@ -289,14 +247,12 @@
     if(q4==='Wettbewerbsposition schärfen') challenger+=2;
     if(q4==='Differenzierung über Innovation') innovator+=3;
     if(q4==='Sichtbarkeit durch Referenzen & Ratings') builder+=3;
-
     const scores=[{key:'Market Builder',v:builder},{key:'Innovator',v:innovator},{key:'Challenger',v:challenger}].sort((a,b)=>b.v-a.v);
     return scores[0].key;
   }
 
   async function analyseAndMission(myRun){
-    const profile=computeProfile();
-
+    // Profil wird nicht mehr angezeigt
     const endBlock=document.createElement('div'); endBlock.className='block'; resultArea.appendChild(endBlock);
     await typeLineInto(endBlock, 'Analyse abgeschlossen.', 14, myRun); if(myRun!==runId) return;
 
@@ -305,12 +261,10 @@
     endBlock.appendChild(cheers);
 
     await new Promise(r=>setTimeout(r,260));
-    const profBlock=document.createElement('div'); profBlock.className='block'; resultArea.appendChild(profBlock);
-    await typeLineInto(profBlock, `Ihr Zukunftsprofil 2026: ${profile}`, 14, myRun); if(myRun!==runId) return;
-    await missionSequence(myRun, true, profile);
+    await missionSequence(myRun, true);
   }
 
-  async function missionSequence(myRun, focusCalendar=true, profile=''){
+  async function missionSequence(myRun, focusCalendar=true){
     const block2=document.createElement('div'); block2.className='block';
     const title2=document.createElement('div'); title2.className='block-title'; title2.textContent='Nächster Schritt';
     const missionP=document.createElement('div'); missionP.className='text';
@@ -331,12 +285,12 @@
     a1.href=CONFIG.calendarUrl;
     a1.target='_blank';
     a1.rel='noopener noreferrer';
-    a1.textContent='✅ Ja, ich möchte einen Termin vereinbaren und mein Zukunftsprofil besprechen';
+    a1.textContent='✅ Termin vereinbaren: PUR-Benchmarks im Gespräch';
 
     const b2=document.createElement('button');
     b2.className='btn';
     b2.type='button';
-    b2.textContent='📄 Bitte senden Sie mir die Ergebnisse per Mail zu';
+    b2.textContent='📄 Exklusive PUR-Insights per Mail';
     b2.addEventListener('click', ()=>openMailForm());
 
     btnRow.appendChild(a1); btnRow.appendChild(b2);
@@ -348,10 +302,9 @@
     }
   }
 
-  // Mini-Formular "Ergebnisse per Mail"
   function openMailForm(){
     const formBlock=document.createElement('div'); formBlock.className='block';
-    const title=document.createElement('div'); title.className='block-title'; title.textContent='Ergebnisse per Mail erhalten';
+    const title=document.createElement('div'); title.className='block-title'; title.textContent='Exklusive PUR-Insights per Mail';
     formBlock.appendChild(title);
 
     const form=document.createElement('form'); form.setAttribute('novalidate','novalidate');
